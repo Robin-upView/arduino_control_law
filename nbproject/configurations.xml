@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>gru_quadcl.h</itemPath>
+      <itemPath>gru_quadcl_private.h</itemPath>
+      <itemPath>gru_quadcl_types.h</itemPath>
+      <itemPath>rt_zcfcn.h</itemPath>
+      <itemPath>rtwtypes.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>ert_main.c</itemPath>
+      <itemPath>gru_quadcl.c</itemPath>
+      <itemPath>gru_quadcl_data.c</itemPath>
+      <itemPath>rt_zcfcn.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3">
+      <toolsSet>
+        <compilerSet>Arduino|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <commandLine>-Os -Wall -ffunction-sections -fdata-sections -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=100</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>-Os -Wall -ffunction-sections -fdata-sections -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=100</commandLine>
+        </ccTool>
+        <archiverTool>
+          <commandlineTool>avr-ar</commandlineTool>
+          <ranlibTool>avr-ranlib</ranlibTool>
+        </archiverTool>
+      </compileType>
+      <item path="ert_main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gru_quadcl_data.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl_private.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gru_quadcl_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rt_zcfcn.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="rt_zcfcn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="ert_main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gru_quadcl_data.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="gru_quadcl_private.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="gru_quadcl_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rt_zcfcn.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="rt_zcfcn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

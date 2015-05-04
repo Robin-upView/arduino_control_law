@@ -1,0 +1,14 @@
+This file is the manifest for the generated code from model 'gru_quadcl'.
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\ert_main.c
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl.c
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_data.c
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\rt_zcfcn.c
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\rt_zcfcn.h
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl.h
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_private.h
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_types.h
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\rtwtypes.h
+C:\Program Files\MATLAB\R2014a\simulink\include\solver_zc.h
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_manifest.txt
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\defines.txt
+C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_manifest.txt
