@@ -10,5 +10,3 @@ C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_types.h
 C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\rtwtypes.h
 C:\Program Files\MATLAB\R2014a\simulink\include\solver_zc.h
 C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_manifest.txt
-C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\defines.txt
-C:\Users\Robin\Documents\MATLAB\gru_quadcl_ert_shrlib_rtw\gru_quadcl_manifest.txt

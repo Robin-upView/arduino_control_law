@@ -1,1 +1,1 @@
-   gru_quadcl.c  rt_logging.c 
+   gru_quadcl.c 
