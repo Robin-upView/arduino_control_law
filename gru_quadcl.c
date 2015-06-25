@@ -3,14 +3,12 @@
  *
  * Code generated for Simulink model 'gru_quadcl'.
  *
- * Model version                  : 1.1178
+ * Model version                  : 1.1180
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Wed Jun 24 20:50:10 2015
+ * C/C++ source code generated on : Thu Jun 25 17:50:52 2015
  *
  * Target selection: ert_shrlib.tlc
- * Embedded hardware selection: 32-bit Generic
- * Emulation hardware selection:
- *    Differs from embedded hardware (MATLAB Host)
+ * Embedded hardware selection: Atmel->AVR
  * Code generation objectives: Unspecified
  * Validation result: Not run
  */
@@ -59,43 +57,42 @@ void gru_quadcl_step(void)
   real_T rtb_Add1_fo;
   real_T rtb_Add_pu;
   real_T rtb_TSamp_j;
+  real_T rtb_pdemscale2;
   boolean_T rtb_RelationalOperator;
   real_T rtb_Add1;
   real_T rtb_Add1_k;
   real_T rtb_Add1_nm;
   boolean_T rtb_LogicalOperator_dn;
   real_T rtb_u_c;
-  real_T rtb_DiscreteTransferFcn;
-  real_T rtb_DiscreteTransferFcn1;
   real_T rtb_Sum9;
-  real_T DiscreteTransferFcn1_tmp;
-  int32_T i;
+  real_T rtb_u_j;
+  int16_T i;
 
-  /* Gain: '<S24>/Gain' incorporates:
-   *  Constant: '<S24>/Constant'
+  /* Gain: '<S23>/Gain' incorporates:
+   *  Constant: '<S23>/Constant'
    *  Inport: '<Root>/rx'
-   *  Sum: '<S24>/Add'
+   *  Sum: '<S23>/Add'
    */
   for (i = 0; i < 8; i++) {
     rtb_Gain_l[i] = (gru_quadcl_U.rx[i] - 15000.0) * 0.0002;
   }
 
-  /* End of Gain: '<S24>/Gain' */
+  /* End of Gain: '<S23>/Gain' */
 
-  /* DataTypeConversion: '<S15>/Data Type Conversion2' incorporates:
-   *  Constant: '<S22>/Constant'
-   *  RelationalOperator: '<S22>/Compare'
+  /* DataTypeConversion: '<S14>/Data Type Conversion2' incorporates:
+   *  Constant: '<S21>/Constant'
+   *  RelationalOperator: '<S21>/Compare'
    */
   rtb_snapact = (rtb_Gain_l[5] >= 0.0);
 
   /* Outputs for Triggered SubSystem: '<S3>/grab altitude' incorporates:
-   *  TriggerPort: '<S28>/Trigger'
+   *  TriggerPort: '<S27>/Trigger'
    */
   zcEvent = rt_ZCFcn(RISING_ZERO_CROSSING,
                      &gru_quadcl_PrevZCX.grabaltitude_Trig_ZCE,
                      (rtb_snapact));
   if (zcEvent != NO_ZCEVENT) {
-    /* Inport: '<S28>/in' incorporates:
+    /* Inport: '<S27>/in' incorporates:
      *  Inport: '<Root>/extparams'
      */
     gru_quadcl_B.in_k = gru_quadcl_U.extparams[31];
@@ -108,7 +105,7 @@ void gru_quadcl_step(void)
    */
   rtb_Add_o = gru_quadcl_B.in_k - gru_quadcl_U.extparams[31];
 
-  /* DiscreteIntegrator: '<S27>/Discrete-Time Integrator' */
+  /* DiscreteIntegrator: '<S26>/Discrete-Time Integrator' */
   if ((rtb_snapact > 0.0) && (gru_quadcl_DW.DiscreteTimeIntegrator_PrevRese <= 0))
   {
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE = 0.0;
@@ -116,23 +113,23 @@ void gru_quadcl_step(void)
 
   rtb_Switch_h = gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE;
 
-  /* End of DiscreteIntegrator: '<S27>/Discrete-Time Integrator' */
+  /* End of DiscreteIntegrator: '<S26>/Discrete-Time Integrator' */
 
   /* Product: '<S3>/Product1' incorporates:
    *  Inport: '<Root>/extparams'
    */
   rtb_Product1 = gru_quadcl_U.extparams[8] * rtb_Switch_h;
 
-  /* SampleTimeMath: '<S25>/TSamp' incorporates:
+  /* SampleTimeMath: '<S24>/TSamp' incorporates:
    *  Inport: '<Root>/extparams'
    *
-   * About '<S25>/TSamp':
+   * About '<S24>/TSamp':
    *  y = u * K where K = 1 / ( w * Ts )
    */
   rtb_TSamp = gru_quadcl_U.extparams[31] * 100.0;
 
-  /* Sum: '<S25>/Diff' incorporates:
-   *  UnitDelay: '<S25>/UD'
+  /* Sum: '<S24>/Diff' incorporates:
+   *  UnitDelay: '<S24>/UD'
    */
   gru_quadcl_B.Diff = rtb_TSamp - gru_quadcl_DW.UD_DSTATE;
 
@@ -175,7 +172,7 @@ void gru_quadcl_step(void)
    *  Constant: '<S3>/Constant'
    */
   if (rtb_snapact >= 0.5) {
-    /* Saturate: '<S29>/Saturation' */
+    /* Saturate: '<S28>/Saturation' */
     if (rtb_Add1 > 0.4) {
       rtb_Switch_h = 0.4;
     } else if (rtb_Add1 < -0.25) {
@@ -184,7 +181,7 @@ void gru_quadcl_step(void)
       rtb_Switch_h = rtb_Add1;
     }
 
-    /* End of Saturate: '<S29>/Saturation' */
+    /* End of Saturate: '<S28>/Saturation' */
   } else {
     rtb_Switch_h = 0.0;
   }
@@ -194,52 +191,38 @@ void gru_quadcl_step(void)
   /* Sum: '<S7>/Add4' */
   rtb_u_c = rtb_Switch_h + rtb_Gain_l[0];
 
-  /* Gain: '<S8>/p dem scale' incorporates:
+  /* Sum: '<S30>/Add' incorporates:
+   *  Gain: '<S8>/p dem scale'
+   *  Inport: '<Root>/ahrs'
    *  Inport: '<Root>/extparams'
    *  Product: '<S8>/Product1'
    */
   rtb_pdemscale = rtb_Gain_l[2] * gru_quadcl_U.extparams[6] *
-    0.017453292519943295;
+    0.017453292519943295 - gru_quadcl_U.ahrs[0];
 
-  /* Switch: '<S1>/Switch4' incorporates:
-   *  DiscreteTransferFcn: '<S10>/Discrete Transfer Fcn'
-   *  Sum: '<S1>/Add'
-   */
-  if (rtb_snapact >= 0.5) {
-    rtb_pdemscale += 0.00245 * gru_quadcl_DW.DiscreteTransferFcn_states[0] +
-      0.002401 * gru_quadcl_DW.DiscreteTransferFcn_states[1];
-  }
-
-  /* End of Switch: '<S1>/Switch4' */
-
-  /* Sum: '<S31>/Add' incorporates:
-   *  Inport: '<Root>/ahrs'
-   */
-  rtb_pdemscale -= gru_quadcl_U.ahrs[0];
-
-  /* DataTypeConversion: '<S15>/Data Type Conversion3' incorporates:
-   *  Constant: '<S21>/Constant'
-   *  Logic: '<S15>/Logical Operator'
-   *  RelationalOperator: '<S21>/Compare'
+  /* DataTypeConversion: '<S14>/Data Type Conversion3' incorporates:
+   *  Constant: '<S20>/Constant'
+   *  Logic: '<S14>/Logical Operator'
+   *  RelationalOperator: '<S20>/Compare'
    */
   rtb_DataTypeConversion3 = !(rtb_Gain_l[0] >= -0.6);
 
-  /* DiscreteIntegrator: '<S36>/Discrete-Time Integrator' */
+  /* DiscreteIntegrator: '<S35>/Discrete-Time Integrator' */
   if ((rtb_DataTypeConversion3 != 0.0) ||
       (gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_i != 0)) {
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_i = 0.0;
   }
 
-  /* Sum: '<S31>/Add1' incorporates:
-   *  DiscreteIntegrator: '<S36>/Discrete-Time Integrator'
+  /* Sum: '<S30>/Add1' incorporates:
+   *  DiscreteIntegrator: '<S35>/Discrete-Time Integrator'
    *  Inport: '<Root>/extparams'
-   *  Product: '<S31>/Product'
-   *  Product: '<S31>/Product1'
+   *  Product: '<S30>/Product'
+   *  Product: '<S30>/Product1'
    */
   rtb_Add1_k4 = rtb_pdemscale * gru_quadcl_U.extparams[4] +
     gru_quadcl_U.extparams[5] * gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_i;
 
-  /* Saturate: '<S37>/Saturation' */
+  /* Saturate: '<S36>/Saturation' */
   if (rtb_Add1_k4 > 3.1415926535897931) {
     rtb_Product1 = 3.1415926535897931;
   } else if (rtb_Add1_k4 < -3.1415926535897931) {
@@ -248,13 +231,13 @@ void gru_quadcl_step(void)
     rtb_Product1 = rtb_Add1_k4;
   }
 
-  /* Sum: '<S44>/Add' incorporates:
+  /* Sum: '<S43>/Add' incorporates:
    *  Inport: '<Root>/rates'
-   *  Saturate: '<S37>/Saturation'
+   *  Saturate: '<S36>/Saturation'
    */
   rtb_Add_b = rtb_Product1 - gru_quadcl_U.rates[0];
 
-  /* DiscreteIntegrator: '<S52>/Discrete-Time Integrator' */
+  /* DiscreteIntegrator: '<S51>/Discrete-Time Integrator' */
   if ((rtb_DataTypeConversion3 != 0.0) ||
       (gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_p != 0)) {
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_l = 0.0;
@@ -262,34 +245,34 @@ void gru_quadcl_step(void)
 
   rtb_Switch_g = gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_l;
 
-  /* End of DiscreteIntegrator: '<S52>/Discrete-Time Integrator' */
+  /* End of DiscreteIntegrator: '<S51>/Discrete-Time Integrator' */
 
-  /* Product: '<S44>/Product1' incorporates:
+  /* Product: '<S43>/Product1' incorporates:
    *  Inport: '<Root>/extparams'
    */
   rtb_Product1 = gru_quadcl_U.extparams[10] * rtb_Switch_g;
 
-  /* UnaryMinus: '<S44>/Unary Minus' incorporates:
+  /* UnaryMinus: '<S43>/Unary Minus' incorporates:
    *  Inport: '<Root>/rates'
    */
   rtb_Switch_g = -gru_quadcl_U.rates[0];
 
-  /* SampleTimeMath: '<S50>/TSamp'
+  /* SampleTimeMath: '<S49>/TSamp'
    *
-   * About '<S50>/TSamp':
+   * About '<S49>/TSamp':
    *  y = u * K where K = 1 / ( w * Ts )
    */
   rtb_TSamp_e = rtb_Switch_g * 100.0;
 
-  /* Product: '<S44>/Product2' incorporates:
+  /* Product: '<S43>/Product2' incorporates:
    *  Inport: '<Root>/extparams'
-   *  Sum: '<S50>/Diff'
-   *  UnitDelay: '<S50>/UD'
+   *  Sum: '<S49>/Diff'
+   *  UnitDelay: '<S49>/UD'
    */
   gru_quadcl_B.Product2 = (rtb_TSamp_e - gru_quadcl_DW.UD_DSTATE_n) *
     gru_quadcl_U.extparams[11];
 
-  /* Weighted Moving Average Block: '<S44>/Weighted Moving Average'
+  /* Weighted Moving Average Block: '<S43>/Weighted Moving Average'
    *
    *  Finite Impulse Response Filter
    *
@@ -307,9 +290,9 @@ void gru_quadcl_step(void)
     rtb_Switch_g = rtb_Switch_g + yTemp1;
   }
 
-  /* Sum: '<S44>/Add1' incorporates:
+  /* Sum: '<S43>/Add1' incorporates:
    *  Inport: '<Root>/extparams'
-   *  Product: '<S44>/Product'
+   *  Product: '<S43>/Product'
    */
   rtb_Add1_nm = (rtb_Add_b * gru_quadcl_U.extparams[0] + rtb_Product1) +
     rtb_Switch_g;
@@ -318,7 +301,7 @@ void gru_quadcl_step(void)
    *  Constant: '<S7>/Constant'
    */
   if (rtb_Gain_l[0] >= -0.8) {
-    /* Saturate: '<S53>/Saturation' */
+    /* Saturate: '<S52>/Saturation' */
     if (rtb_Add1_nm > 0.2) {
       rtb_Switch_g = 0.2;
     } else if (rtb_Add1_nm < -0.2) {
@@ -327,62 +310,39 @@ void gru_quadcl_step(void)
       rtb_Switch_g = rtb_Add1_nm;
     }
 
-    /* End of Saturate: '<S53>/Saturation' */
+    /* End of Saturate: '<S52>/Saturation' */
   } else {
     rtb_Switch_g = 0.0;
   }
 
   /* End of Switch: '<S7>/Switch' */
 
-  /* DiscreteTransferFcn: '<S10>/Discrete Transfer Fcn1' incorporates:
-   *  Inport: '<Root>/crackle_cmds'
-   *  Inport: '<Root>/extparams'
-   *  Product: '<S10>/Product1'
-   */
-  DiscreteTransferFcn1_tmp = (gru_quadcl_U.extparams[21] *
-    gru_quadcl_U.crackle_cmds[5] - 0.9418 *
-    gru_quadcl_DW.DiscreteTransferFcn1_states) / -0.937;
-
-  /* Gain: '<S8>/p dem scale1' incorporates:
-   *  Gain: '<S15>/Gain'
+  /* Sum: '<S29>/Add' incorporates:
+   *  Gain: '<S14>/Gain'
+   *  Gain: '<S8>/p dem scale1'
+   *  Inport: '<Root>/ahrs'
    *  Inport: '<Root>/extparams'
    *  Product: '<S8>/Product2'
    */
   rtb_pdemscale1 = -rtb_Gain_l[3] * gru_quadcl_U.extparams[6] *
-    0.017453292519943295;
+    0.017453292519943295 - gru_quadcl_U.ahrs[1];
 
-  /* Switch: '<S1>/Switch3' incorporates:
-   *  DiscreteTransferFcn: '<S10>/Discrete Transfer Fcn1'
-   *  Sum: '<S1>/Add1'
-   */
-  if (rtb_snapact >= 0.5) {
-    rtb_pdemscale1 += 0.00245 * DiscreteTransferFcn1_tmp + 0.002401 *
-      gru_quadcl_DW.DiscreteTransferFcn1_states;
-  }
-
-  /* End of Switch: '<S1>/Switch3' */
-
-  /* Sum: '<S30>/Add' incorporates:
-   *  Inport: '<Root>/ahrs'
-   */
-  rtb_pdemscale1 -= gru_quadcl_U.ahrs[1];
-
-  /* DiscreteIntegrator: '<S33>/Discrete-Time Integrator' */
+  /* DiscreteIntegrator: '<S32>/Discrete-Time Integrator' */
   if ((rtb_DataTypeConversion3 != 0.0) ||
       (gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_c != 0)) {
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_k = 0.0;
   }
 
-  /* Sum: '<S30>/Add1' incorporates:
-   *  DiscreteIntegrator: '<S33>/Discrete-Time Integrator'
+  /* Sum: '<S29>/Add1' incorporates:
+   *  DiscreteIntegrator: '<S32>/Discrete-Time Integrator'
    *  Inport: '<Root>/extparams'
-   *  Product: '<S30>/Product'
-   *  Product: '<S30>/Product1'
+   *  Product: '<S29>/Product'
+   *  Product: '<S29>/Product1'
    */
   rtb_Add1_fo = rtb_pdemscale1 * gru_quadcl_U.extparams[4] +
     gru_quadcl_U.extparams[5] * gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_k;
 
-  /* Saturate: '<S34>/Saturation' */
+  /* Saturate: '<S33>/Saturation' */
   if (rtb_Add1_fo > 3.1415926535897931) {
     rtb_Product1 = 3.1415926535897931;
   } else if (rtb_Add1_fo < -3.1415926535897931) {
@@ -391,13 +351,13 @@ void gru_quadcl_step(void)
     rtb_Product1 = rtb_Add1_fo;
   }
 
-  /* Sum: '<S43>/Add' incorporates:
+  /* Sum: '<S42>/Add' incorporates:
    *  Inport: '<Root>/rates'
-   *  Saturate: '<S34>/Saturation'
+   *  Saturate: '<S33>/Saturation'
    */
   rtb_Add_pu = rtb_Product1 - gru_quadcl_U.rates[1];
 
-  /* DiscreteIntegrator: '<S48>/Discrete-Time Integrator' */
+  /* DiscreteIntegrator: '<S47>/Discrete-Time Integrator' */
   if ((rtb_DataTypeConversion3 != 0.0) ||
       (gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_d != 0)) {
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_n = 0.0;
@@ -405,34 +365,34 @@ void gru_quadcl_step(void)
 
   rtb_Switch1_k = gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_n;
 
-  /* End of DiscreteIntegrator: '<S48>/Discrete-Time Integrator' */
+  /* End of DiscreteIntegrator: '<S47>/Discrete-Time Integrator' */
 
-  /* Product: '<S43>/Product1' incorporates:
+  /* Product: '<S42>/Product1' incorporates:
    *  Inport: '<Root>/extparams'
    */
   rtb_Product1 = gru_quadcl_U.extparams[16] * rtb_Switch1_k;
 
-  /* UnaryMinus: '<S43>/Unary Minus' incorporates:
+  /* UnaryMinus: '<S42>/Unary Minus' incorporates:
    *  Inport: '<Root>/rates'
    */
   rtb_Switch1_k = -gru_quadcl_U.rates[1];
 
-  /* SampleTimeMath: '<S46>/TSamp'
+  /* SampleTimeMath: '<S45>/TSamp'
    *
-   * About '<S46>/TSamp':
+   * About '<S45>/TSamp':
    *  y = u * K where K = 1 / ( w * Ts )
    */
   rtb_TSamp_j = rtb_Switch1_k * 100.0;
 
-  /* Product: '<S43>/Product2' incorporates:
+  /* Product: '<S42>/Product2' incorporates:
    *  Inport: '<Root>/extparams'
-   *  Sum: '<S46>/Diff'
-   *  UnitDelay: '<S46>/UD'
+   *  Sum: '<S45>/Diff'
+   *  UnitDelay: '<S45>/UD'
    */
   gru_quadcl_B.Product2_f = (rtb_TSamp_j - gru_quadcl_DW.UD_DSTATE_h) *
     gru_quadcl_U.extparams[17];
 
-  /* Weighted Moving Average Block: '<S43>/Weighted Moving Average'
+  /* Weighted Moving Average Block: '<S42>/Weighted Moving Average'
    *
    *  Finite Impulse Response Filter
    *
@@ -450,9 +410,9 @@ void gru_quadcl_step(void)
     rtb_Switch1_k = rtb_Switch1_k + yTemp1;
   }
 
-  /* Sum: '<S43>/Add1' incorporates:
+  /* Sum: '<S42>/Add1' incorporates:
    *  Inport: '<Root>/extparams'
-   *  Product: '<S43>/Product'
+   *  Product: '<S42>/Product'
    */
   rtb_Add1_k = (rtb_Add_pu * gru_quadcl_U.extparams[15] + rtb_Product1) +
     rtb_Switch1_k;
@@ -461,7 +421,7 @@ void gru_quadcl_step(void)
    *  Constant: '<S7>/Constant'
    */
   if (rtb_Gain_l[0] >= -0.8) {
-    /* Saturate: '<S49>/Saturation' */
+    /* Saturate: '<S48>/Saturation' */
     if (rtb_Add1_k > 0.4) {
       rtb_Switch1_k = 0.4;
     } else if (rtb_Add1_k < -0.4) {
@@ -470,7 +430,7 @@ void gru_quadcl_step(void)
       rtb_Switch1_k = rtb_Add1_k;
     }
 
-    /* End of Saturate: '<S49>/Saturation' */
+    /* End of Saturate: '<S48>/Saturation' */
   } else {
     rtb_Switch1_k = 0.0;
   }
@@ -481,36 +441,35 @@ void gru_quadcl_step(void)
    *  Inport: '<Root>/extparams'
    *  Product: '<S8>/Product3'
    */
-  rtb_DiscreteTransferFcn = rtb_Gain_l[4] * gru_quadcl_U.extparams[3] *
+  rtb_pdemscale2 = rtb_Gain_l[4] * gru_quadcl_U.extparams[3] *
     0.017453292519943295;
 
   /* RelationalOperator: '<S6>/Relational Operator' incorporates:
    *  Abs: '<S6>/Abs'
    *  Inport: '<Root>/extparams'
    */
-  rtb_RelationalOperator = (fabs(rtb_DiscreteTransferFcn) <
-    gru_quadcl_U.extparams[13]);
+  rtb_RelationalOperator = (fabs(rtb_pdemscale2) < gru_quadcl_U.extparams[13]);
 
   /* Outputs for Triggered SubSystem: '<S6>/grab heading' incorporates:
-   *  TriggerPort: '<S39>/Trigger'
+   *  TriggerPort: '<S38>/Trigger'
    */
   if (rtb_RelationalOperator && (gru_quadcl_PrevZCX.grabheading_Trig_ZCE !=
        POS_ZCSIG)) {
-    /* Inport: '<S39>/in' incorporates:
+    /* Inport: '<S38>/in' incorporates:
      *  Inport: '<Root>/ahrs'
      */
     gru_quadcl_B.in = gru_quadcl_U.ahrs[2];
   }
 
   gru_quadcl_PrevZCX.grabheading_Trig_ZCE = (uint8_T)(rtb_RelationalOperator ?
-    (int32_T)POS_ZCSIG : (int32_T)ZERO_ZCSIG);
+    (int16_T)POS_ZCSIG : (int16_T)ZERO_ZCSIG);
 
   /* End of Outputs for SubSystem: '<S6>/grab heading' */
 
-  /* Switch: '<S40>/Switch5' incorporates:
-   *  Constant: '<S40>/360 deg'
+  /* Switch: '<S39>/Switch5' incorporates:
+   *  Constant: '<S39>/360 deg'
    *  Inport: '<Root>/ahrs'
-   *  Sum: '<S40>/Sum8'
+   *  Sum: '<S39>/Sum8'
    */
   if (gru_quadcl_B.in >= 0.0) {
     rtb_Product1 = gru_quadcl_B.in;
@@ -524,30 +483,30 @@ void gru_quadcl_step(void)
     rtb_Sum9 = gru_quadcl_U.ahrs[2] + 6.2831853071795862;
   }
 
-  /* End of Switch: '<S40>/Switch5' */
+  /* End of Switch: '<S39>/Switch5' */
 
-  /* Sum: '<S40>/Sum9' */
+  /* Sum: '<S39>/Sum9' */
   rtb_Sum9 = rtb_Product1 - rtb_Sum9;
 
-  /* Switch: '<S40>/Switch6' incorporates:
-   *  Constant: '<S40>/360 deg'
-   *  Sum: '<S40>/Sum10'
+  /* Switch: '<S39>/Switch6' incorporates:
+   *  Constant: '<S39>/360 deg'
+   *  Sum: '<S39>/Sum10'
    */
   if (rtb_Sum9 >= 3.1415926535897931) {
     rtb_Sum9 -= 6.2831853071795862;
   }
 
-  /* End of Switch: '<S40>/Switch6' */
+  /* End of Switch: '<S39>/Switch6' */
 
-  /* Switch: '<S40>/Switch7' incorporates:
-   *  Constant: '<S40>/360 deg'
-   *  Sum: '<S40>/Sum11'
+  /* Switch: '<S39>/Switch7' incorporates:
+   *  Constant: '<S39>/360 deg'
+   *  Sum: '<S39>/Sum11'
    */
   if (!(rtb_Sum9 >= -3.1415926535897931)) {
     rtb_Sum9 += 6.2831853071795862;
   }
 
-  /* End of Switch: '<S40>/Switch7' */
+  /* End of Switch: '<S39>/Switch7' */
 
   /* Switch: '<S7>/Switch2' incorporates:
    *  Constant: '<S7>/Constant'
@@ -555,11 +514,11 @@ void gru_quadcl_step(void)
   if (rtb_Gain_l[0] >= -0.8) {
     /* Switch: '<S6>/Switch' incorporates:
      *  Inport: '<Root>/extparams'
-     *  RelationalOperator: '<S38>/u_GTE_up'
-     *  RelationalOperator: '<S38>/u_GT_lo'
-     *  Sum: '<S38>/Diff'
-     *  Switch: '<S38>/Switch'
-     *  Switch: '<S38>/Switch1'
+     *  RelationalOperator: '<S37>/u_GTE_up'
+     *  RelationalOperator: '<S37>/u_GT_lo'
+     *  Sum: '<S37>/Diff'
+     *  Switch: '<S37>/Switch'
+     *  Switch: '<S37>/Switch1'
      *  UnaryMinus: '<S6>/Unary Minus'
      */
     if (rtb_RelationalOperator) {
@@ -568,7 +527,7 @@ void gru_quadcl_step(void)
        */
       rtb_Product1 = rtb_Sum9 * gru_quadcl_U.extparams[12];
 
-      /* Saturate: '<S41>/Saturation' */
+      /* Saturate: '<S40>/Saturation' */
       if (rtb_Product1 > 0.52359877559829882) {
         rtb_Product1 = 0.52359877559829882;
       } else {
@@ -577,40 +536,40 @@ void gru_quadcl_step(void)
         }
       }
 
-      /* End of Saturate: '<S41>/Saturation' */
+      /* End of Saturate: '<S40>/Saturation' */
     } else {
-      if (rtb_DiscreteTransferFcn >= gru_quadcl_U.extparams[13]) {
-        /* Switch: '<S38>/Switch' incorporates:
+      if (rtb_pdemscale2 >= gru_quadcl_U.extparams[13]) {
+        /* Switch: '<S37>/Switch' incorporates:
          *  Inport: '<Root>/extparams'
          */
         rtb_Sum9 = gru_quadcl_U.extparams[13];
-      } else if (rtb_DiscreteTransferFcn > -gru_quadcl_U.extparams[13]) {
-        /* Switch: '<S38>/Switch1' incorporates:
-         *  Switch: '<S38>/Switch'
+      } else if (rtb_pdemscale2 > -gru_quadcl_U.extparams[13]) {
+        /* Switch: '<S37>/Switch1' incorporates:
+         *  Switch: '<S37>/Switch'
          */
-        rtb_Sum9 = rtb_DiscreteTransferFcn;
+        rtb_Sum9 = rtb_pdemscale2;
       } else {
-        /* Switch: '<S38>/Switch' incorporates:
+        /* Switch: '<S37>/Switch' incorporates:
          *  Inport: '<Root>/extparams'
          *  UnaryMinus: '<S6>/Unary Minus'
          */
         rtb_Sum9 = -gru_quadcl_U.extparams[13];
       }
 
-      rtb_Product1 = rtb_DiscreteTransferFcn - rtb_Sum9;
+      rtb_Product1 = rtb_pdemscale2 - rtb_Sum9;
     }
 
     /* End of Switch: '<S6>/Switch' */
 
-    /* Product: '<S45>/Product' incorporates:
+    /* Product: '<S44>/Product' incorporates:
      *  Inport: '<Root>/extparams'
      *  Inport: '<Root>/rates'
-     *  Sum: '<S45>/Add'
+     *  Sum: '<S44>/Add'
      */
     rtb_Product1 = (rtb_Product1 - gru_quadcl_U.rates[2]) *
       gru_quadcl_U.extparams[1];
 
-    /* Saturate: '<S45>/Saturation' */
+    /* Saturate: '<S44>/Saturation' */
     if (rtb_Product1 > 0.2) {
       rtb_Sum9 = 0.2;
     } else if (rtb_Product1 < -0.2) {
@@ -619,7 +578,7 @@ void gru_quadcl_step(void)
       rtb_Sum9 = rtb_Product1;
     }
 
-    /* End of Saturate: '<S45>/Saturation' */
+    /* End of Saturate: '<S44>/Saturation' */
   } else {
     rtb_Sum9 = 0.0;
   }
@@ -630,21 +589,19 @@ void gru_quadcl_step(void)
   rtb_Product1 = ((rtb_u_c - rtb_Switch_g) + rtb_Switch1_k) + rtb_Sum9;
 
   /* Sum: '<S7>/Add2' */
-  rtb_DiscreteTransferFcn = ((rtb_u_c + rtb_Switch_g) + rtb_Switch1_k) -
-    rtb_Sum9;
+  rtb_pdemscale2 = ((rtb_u_c + rtb_Switch_g) + rtb_Switch1_k) - rtb_Sum9;
 
   /* Sum: '<S7>/Add1' */
-  rtb_DiscreteTransferFcn1 = ((rtb_u_c + rtb_Switch_g) - rtb_Switch1_k) +
-    rtb_Sum9;
+  rtb_u_j = ((rtb_u_c + rtb_Switch_g) - rtb_Switch1_k) + rtb_Sum9;
 
   /* Sum: '<S7>/Add' */
   rtb_u_c = ((rtb_u_c - rtb_Switch_g) - rtb_Switch1_k) - rtb_Sum9;
 
-  /* Sum: '<S42>/Add1' incorporates:
-   *  Constant: '<S42>/Constant'
-   *  Constant: '<S42>/Constant1'
-   *  Gain: '<S42>/Gain'
-   *  Sum: '<S42>/Add'
+  /* Sum: '<S41>/Add1' incorporates:
+   *  Constant: '<S41>/Constant'
+   *  Constant: '<S41>/Constant1'
+   *  Gain: '<S41>/Gain'
+   *  Sum: '<S41>/Add'
    */
   rtb_Product1 = (rtb_Product1 + 1.0) * 5000.0 + 10000.0;
 
@@ -660,13 +617,13 @@ void gru_quadcl_step(void)
     gru_quadcl_Y.servos[0] = rtb_Product1;
   }
 
-  /* Sum: '<S42>/Add1' incorporates:
-   *  Constant: '<S42>/Constant'
-   *  Constant: '<S42>/Constant1'
-   *  Gain: '<S42>/Gain'
-   *  Sum: '<S42>/Add'
+  /* Sum: '<S41>/Add1' incorporates:
+   *  Constant: '<S41>/Constant'
+   *  Constant: '<S41>/Constant1'
+   *  Gain: '<S41>/Gain'
+   *  Sum: '<S41>/Add'
    */
-  rtb_Product1 = (rtb_DiscreteTransferFcn + 1.0) * 5000.0 + 10000.0;
+  rtb_Product1 = (rtb_pdemscale2 + 1.0) * 5000.0 + 10000.0;
 
   /* Saturate: '<S7>/Saturation1' */
   if (rtb_Product1 > 20000.0) {
@@ -680,13 +637,13 @@ void gru_quadcl_step(void)
     gru_quadcl_Y.servos[1] = rtb_Product1;
   }
 
-  /* Sum: '<S42>/Add1' incorporates:
-   *  Constant: '<S42>/Constant'
-   *  Constant: '<S42>/Constant1'
-   *  Gain: '<S42>/Gain'
-   *  Sum: '<S42>/Add'
+  /* Sum: '<S41>/Add1' incorporates:
+   *  Constant: '<S41>/Constant'
+   *  Constant: '<S41>/Constant1'
+   *  Gain: '<S41>/Gain'
+   *  Sum: '<S41>/Add'
    */
-  rtb_Product1 = (rtb_DiscreteTransferFcn1 + 1.0) * 5000.0 + 10000.0;
+  rtb_Product1 = (rtb_u_j + 1.0) * 5000.0 + 10000.0;
 
   /* Saturate: '<S7>/Saturation1' */
   if (rtb_Product1 > 20000.0) {
@@ -700,11 +657,11 @@ void gru_quadcl_step(void)
     gru_quadcl_Y.servos[2] = rtb_Product1;
   }
 
-  /* Sum: '<S42>/Add1' incorporates:
-   *  Constant: '<S42>/Constant'
-   *  Constant: '<S42>/Constant1'
-   *  Gain: '<S42>/Gain'
-   *  Sum: '<S42>/Add'
+  /* Sum: '<S41>/Add1' incorporates:
+   *  Constant: '<S41>/Constant'
+   *  Constant: '<S41>/Constant1'
+   *  Gain: '<S41>/Gain'
+   *  Sum: '<S41>/Add'
    */
   rtb_Product1 = (rtb_u_c + 1.0) * 5000.0 + 10000.0;
 
@@ -721,10 +678,10 @@ void gru_quadcl_step(void)
   }
 
   /* Outport: '<Root>/servos' incorporates:
-   *  Constant: '<S42>/Constant1'
-   *  Gain: '<S42>/Gain'
+   *  Constant: '<S41>/Constant1'
+   *  Gain: '<S41>/Gain'
    *  Saturate: '<S7>/Saturation1'
-   *  Sum: '<S42>/Add1'
+   *  Sum: '<S41>/Add1'
    */
   gru_quadcl_Y.servos[4] = 15000.0;
   gru_quadcl_Y.servos[5] = 15000.0;
@@ -733,7 +690,7 @@ void gru_quadcl_step(void)
 
   /* Outport: '<Root>/addlog' incorporates:
    *  Constant: '<S5>/Constant1'
-   *  Gain: '<S15>/Gain'
+   *  Gain: '<S14>/Gain'
    *  Inport: '<Root>/extparams'
    *  Inport: '<Root>/rates'
    */
@@ -770,31 +727,31 @@ void gru_quadcl_step(void)
   gru_quadcl_Y.addlog[30] = 0.0;
   gru_quadcl_Y.addlog[31] = 0.0;
 
-  /* Outputs for Triggered SubSystem: '<S14>/grab alt' incorporates:
-   *  TriggerPort: '<S20>/Trigger'
+  /* Outputs for Triggered SubSystem: '<S13>/grab alt' incorporates:
+   *  TriggerPort: '<S19>/Trigger'
    */
   rt_ZCFcn(FALLING_ZERO_CROSSING,&gru_quadcl_PrevZCX.grabalt_Trig_ZCE,
            (rtb_DataTypeConversion3));
 
-  /* End of Outputs for SubSystem: '<S14>/grab alt' */
+  /* End of Outputs for SubSystem: '<S13>/grab alt' */
 
-  /* Logic: '<S49>/Logical Operator' incorporates:
-   *  Constant: '<S49>/lower limit'
-   *  Constant: '<S49>/upper limit'
-   *  RelationalOperator: '<S49>/Relational Operator'
-   *  RelationalOperator: '<S49>/Relational Operator1'
+  /* Logic: '<S48>/Logical Operator' incorporates:
+   *  Constant: '<S48>/lower limit'
+   *  Constant: '<S48>/upper limit'
+   *  RelationalOperator: '<S48>/Relational Operator'
+   *  RelationalOperator: '<S48>/Relational Operator1'
    */
   rtb_RelationalOperator = ((rtb_Add1_k >= 0.4) || (rtb_Add1_k <= -0.4));
 
-  /* Logic: '<S53>/Logical Operator' incorporates:
-   *  Constant: '<S53>/lower limit'
-   *  Constant: '<S53>/upper limit'
-   *  RelationalOperator: '<S53>/Relational Operator'
-   *  RelationalOperator: '<S53>/Relational Operator1'
+  /* Logic: '<S52>/Logical Operator' incorporates:
+   *  Constant: '<S52>/lower limit'
+   *  Constant: '<S52>/upper limit'
+   *  RelationalOperator: '<S52>/Relational Operator'
+   *  RelationalOperator: '<S52>/Relational Operator1'
    */
   rtb_LogicalOperator_dn = ((rtb_Add1_nm >= 0.2) || (rtb_Add1_nm <= -0.2));
 
-  /* Signum: '<S26>/Sign' */
+  /* Signum: '<S25>/Sign' */
   if (rtb_Add_o < 0.0) {
     rtb_Sum9 = -1.0;
   } else if (rtb_Add_o > 0.0) {
@@ -805,7 +762,7 @@ void gru_quadcl_step(void)
     rtb_Sum9 = rtb_Add_o;
   }
 
-  /* Signum: '<S26>/Sign1' */
+  /* Signum: '<S25>/Sign1' */
   if (rtb_Add1 < 0.0) {
     rtb_Product1 = -1.0;
   } else if (rtb_Add1 > 0.0) {
@@ -816,26 +773,26 @@ void gru_quadcl_step(void)
     rtb_Product1 = rtb_Add1;
   }
 
-  /* Switch: '<S27>/Switch' incorporates:
-   *  Constant: '<S27>/Constant'
-   *  Constant: '<S29>/lower limit'
-   *  Constant: '<S29>/upper limit'
-   *  Logic: '<S26>/Logical Operator'
-   *  Logic: '<S29>/Logical Operator'
-   *  RelationalOperator: '<S26>/Relational Operator'
-   *  RelationalOperator: '<S29>/Relational Operator'
-   *  RelationalOperator: '<S29>/Relational Operator1'
-   *  Signum: '<S26>/Sign'
-   *  Signum: '<S26>/Sign1'
+  /* Switch: '<S26>/Switch' incorporates:
+   *  Constant: '<S26>/Constant'
+   *  Constant: '<S28>/lower limit'
+   *  Constant: '<S28>/upper limit'
+   *  Logic: '<S25>/Logical Operator'
+   *  Logic: '<S28>/Logical Operator'
+   *  RelationalOperator: '<S25>/Relational Operator'
+   *  RelationalOperator: '<S28>/Relational Operator'
+   *  RelationalOperator: '<S28>/Relational Operator1'
+   *  Signum: '<S25>/Sign'
+   *  Signum: '<S25>/Sign1'
    */
   if (((rtb_Add1 >= 0.4) || (rtb_Add1 <= -0.25)) && (rtb_Sum9 == rtb_Product1))
   {
     rtb_Add_o = 0.0;
   }
 
-  /* End of Switch: '<S27>/Switch' */
+  /* End of Switch: '<S26>/Switch' */
 
-  /* Update for DiscreteIntegrator: '<S27>/Discrete-Time Integrator' */
+  /* Update for DiscreteIntegrator: '<S26>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE += 0.01 * rtb_Add_o;
   if (rtb_snapact > 0.0) {
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRese = 1;
@@ -847,15 +804,15 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRese = 2;
   }
 
-  /* End of Update for DiscreteIntegrator: '<S27>/Discrete-Time Integrator' */
+  /* End of Update for DiscreteIntegrator: '<S26>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S25>/UD' */
+  /* Update for UnitDelay: '<S24>/UD' */
   gru_quadcl_DW.UD_DSTATE = rtb_TSamp;
 
   /* Weighted Moving Average Block: '<S3>/Weighted Moving Average'
    */
   {
-    int32_T iObj;
+    int16_T iObj;
 
     /*
      * shift all the discrete states on time delay
@@ -873,21 +830,9 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.WeightedMovingAverage_TapDelayU[0] = gru_quadcl_B.Diff;
   }
 
-  /* Update for DiscreteTransferFcn: '<S10>/Discrete Transfer Fcn' incorporates:
-   *  Inport: '<Root>/crackle_cmds'
-   *  Inport: '<Root>/extparams'
-   *  Product: '<S10>/Product'
-   */
-  rtb_Product1 = (gru_quadcl_U.crackle_cmds[3] * gru_quadcl_U.extparams[21] -
-                  -1.937 * gru_quadcl_DW.DiscreteTransferFcn_states[0]) - 0.9418
-    * gru_quadcl_DW.DiscreteTransferFcn_states[1];
-  gru_quadcl_DW.DiscreteTransferFcn_states[1] =
-    gru_quadcl_DW.DiscreteTransferFcn_states[0];
-  gru_quadcl_DW.DiscreteTransferFcn_states[0] = rtb_Product1;
-
-  /* Update for DiscreteIntegrator: '<S36>/Discrete-Time Integrator' */
+  /* Update for DiscreteIntegrator: '<S35>/Discrete-Time Integrator' */
   if (rtb_DataTypeConversion3 == 0.0) {
-    /* Signum: '<S35>/Sign' */
+    /* Signum: '<S34>/Sign' */
     if (rtb_pdemscale < 0.0) {
       rtb_Sum9 = -1.0;
     } else if (rtb_pdemscale > 0.0) {
@@ -898,7 +843,7 @@ void gru_quadcl_step(void)
       rtb_Sum9 = rtb_pdemscale;
     }
 
-    /* Signum: '<S35>/Sign1' */
+    /* Signum: '<S34>/Sign1' */
     if (rtb_Add1_k4 < 0.0) {
       rtb_Product1 = -1.0;
     } else if (rtb_Add1_k4 > 0.0) {
@@ -909,18 +854,18 @@ void gru_quadcl_step(void)
       rtb_Product1 = rtb_Add1_k4;
     }
 
-    /* Switch: '<S36>/Switch' incorporates:
-     *  Constant: '<S36>/Constant'
-     *  Constant: '<S37>/lower limit'
-     *  Constant: '<S37>/upper limit'
-     *  Logic: '<S31>/Logical Operator'
-     *  Logic: '<S35>/Logical Operator'
-     *  Logic: '<S37>/Logical Operator'
-     *  RelationalOperator: '<S35>/Relational Operator'
-     *  RelationalOperator: '<S37>/Relational Operator'
-     *  RelationalOperator: '<S37>/Relational Operator1'
-     *  Signum: '<S35>/Sign'
-     *  Signum: '<S35>/Sign1'
+    /* Switch: '<S35>/Switch' incorporates:
+     *  Constant: '<S35>/Constant'
+     *  Constant: '<S36>/lower limit'
+     *  Constant: '<S36>/upper limit'
+     *  Logic: '<S30>/Logical Operator'
+     *  Logic: '<S34>/Logical Operator'
+     *  Logic: '<S36>/Logical Operator'
+     *  RelationalOperator: '<S34>/Relational Operator'
+     *  RelationalOperator: '<S36>/Relational Operator'
+     *  RelationalOperator: '<S36>/Relational Operator1'
+     *  Signum: '<S34>/Sign'
+     *  Signum: '<S34>/Sign1'
      */
     if (((rtb_Add1_k4 >= 3.1415926535897931) || (rtb_Add1_k4 <=
           -3.1415926535897931) || rtb_LogicalOperator_dn) && (rtb_Sum9 ==
@@ -928,7 +873,7 @@ void gru_quadcl_step(void)
       rtb_pdemscale = 0.0;
     }
 
-    /* End of Switch: '<S36>/Switch' */
+    /* End of Switch: '<S35>/Switch' */
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_i += 0.01 * rtb_pdemscale;
   }
 
@@ -942,11 +887,11 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_i = 2;
   }
 
-  /* End of Update for DiscreteIntegrator: '<S36>/Discrete-Time Integrator' */
+  /* End of Update for DiscreteIntegrator: '<S35>/Discrete-Time Integrator' */
 
-  /* Update for DiscreteIntegrator: '<S52>/Discrete-Time Integrator' */
+  /* Update for DiscreteIntegrator: '<S51>/Discrete-Time Integrator' */
   if (rtb_DataTypeConversion3 == 0.0) {
-    /* Signum: '<S51>/Sign' */
+    /* Signum: '<S50>/Sign' */
     if (rtb_Add_b < 0.0) {
       rtb_Sum9 = -1.0;
     } else if (rtb_Add_b > 0.0) {
@@ -957,7 +902,7 @@ void gru_quadcl_step(void)
       rtb_Sum9 = rtb_Add_b;
     }
 
-    /* Signum: '<S51>/Sign1' */
+    /* Signum: '<S50>/Sign1' */
     if (rtb_Add1_nm < 0.0) {
       rtb_Add1_nm = -1.0;
     } else if (rtb_Add1_nm > 0.0) {
@@ -968,18 +913,18 @@ void gru_quadcl_step(void)
       }
     }
 
-    /* Switch: '<S52>/Switch' incorporates:
-     *  Constant: '<S52>/Constant'
-     *  Logic: '<S51>/Logical Operator'
-     *  RelationalOperator: '<S51>/Relational Operator'
-     *  Signum: '<S51>/Sign'
-     *  Signum: '<S51>/Sign1'
+    /* Switch: '<S51>/Switch' incorporates:
+     *  Constant: '<S51>/Constant'
+     *  Logic: '<S50>/Logical Operator'
+     *  RelationalOperator: '<S50>/Relational Operator'
+     *  Signum: '<S50>/Sign'
+     *  Signum: '<S50>/Sign1'
      */
     if (rtb_LogicalOperator_dn && (rtb_Sum9 == rtb_Add1_nm)) {
       rtb_Add_b = 0.0;
     }
 
-    /* End of Switch: '<S52>/Switch' */
+    /* End of Switch: '<S51>/Switch' */
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_l += 0.01 * rtb_Add_b;
   }
 
@@ -993,12 +938,12 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_p = 2;
   }
 
-  /* End of Update for DiscreteIntegrator: '<S52>/Discrete-Time Integrator' */
+  /* End of Update for DiscreteIntegrator: '<S51>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S50>/UD' */
+  /* Update for UnitDelay: '<S49>/UD' */
   gru_quadcl_DW.UD_DSTATE_n = rtb_TSamp_e;
 
-  /* Weighted Moving Average Block: '<S44>/Weighted Moving Average'
+  /* Weighted Moving Average Block: '<S43>/Weighted Moving Average'
    */
   {
     /*
@@ -1007,12 +952,9 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.WeightedMovingAverage_TapDela_f = gru_quadcl_B.Product2;
   }
 
-  /* Update for DiscreteTransferFcn: '<S10>/Discrete Transfer Fcn1' */
-  gru_quadcl_DW.DiscreteTransferFcn1_states = DiscreteTransferFcn1_tmp;
-
-  /* Update for DiscreteIntegrator: '<S33>/Discrete-Time Integrator' */
+  /* Update for DiscreteIntegrator: '<S32>/Discrete-Time Integrator' */
   if (rtb_DataTypeConversion3 == 0.0) {
-    /* Signum: '<S32>/Sign' */
+    /* Signum: '<S31>/Sign' */
     if (rtb_pdemscale1 < 0.0) {
       rtb_Sum9 = -1.0;
     } else if (rtb_pdemscale1 > 0.0) {
@@ -1023,7 +965,7 @@ void gru_quadcl_step(void)
       rtb_Sum9 = rtb_pdemscale1;
     }
 
-    /* Signum: '<S32>/Sign1' */
+    /* Signum: '<S31>/Sign1' */
     if (rtb_Add1_fo < 0.0) {
       rtb_Product1 = -1.0;
     } else if (rtb_Add1_fo > 0.0) {
@@ -1034,18 +976,18 @@ void gru_quadcl_step(void)
       rtb_Product1 = rtb_Add1_fo;
     }
 
-    /* Switch: '<S33>/Switch' incorporates:
-     *  Constant: '<S33>/Constant'
-     *  Constant: '<S34>/lower limit'
-     *  Constant: '<S34>/upper limit'
-     *  Logic: '<S30>/Logical Operator'
-     *  Logic: '<S32>/Logical Operator'
-     *  Logic: '<S34>/Logical Operator'
-     *  RelationalOperator: '<S32>/Relational Operator'
-     *  RelationalOperator: '<S34>/Relational Operator'
-     *  RelationalOperator: '<S34>/Relational Operator1'
-     *  Signum: '<S32>/Sign'
-     *  Signum: '<S32>/Sign1'
+    /* Switch: '<S32>/Switch' incorporates:
+     *  Constant: '<S32>/Constant'
+     *  Constant: '<S33>/lower limit'
+     *  Constant: '<S33>/upper limit'
+     *  Logic: '<S29>/Logical Operator'
+     *  Logic: '<S31>/Logical Operator'
+     *  Logic: '<S33>/Logical Operator'
+     *  RelationalOperator: '<S31>/Relational Operator'
+     *  RelationalOperator: '<S33>/Relational Operator'
+     *  RelationalOperator: '<S33>/Relational Operator1'
+     *  Signum: '<S31>/Sign'
+     *  Signum: '<S31>/Sign1'
      */
     if (((rtb_Add1_fo >= 3.1415926535897931) || (rtb_Add1_fo <=
           -3.1415926535897931) || rtb_RelationalOperator) && (rtb_Sum9 ==
@@ -1053,7 +995,7 @@ void gru_quadcl_step(void)
       rtb_pdemscale1 = 0.0;
     }
 
-    /* End of Switch: '<S33>/Switch' */
+    /* End of Switch: '<S32>/Switch' */
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_k += 0.01 * rtb_pdemscale1;
   }
 
@@ -1067,11 +1009,11 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_c = 2;
   }
 
-  /* End of Update for DiscreteIntegrator: '<S33>/Discrete-Time Integrator' */
+  /* End of Update for DiscreteIntegrator: '<S32>/Discrete-Time Integrator' */
 
-  /* Update for DiscreteIntegrator: '<S48>/Discrete-Time Integrator' */
+  /* Update for DiscreteIntegrator: '<S47>/Discrete-Time Integrator' */
   if (rtb_DataTypeConversion3 == 0.0) {
-    /* Signum: '<S47>/Sign' */
+    /* Signum: '<S46>/Sign' */
     if (rtb_Add_pu < 0.0) {
       rtb_Sum9 = -1.0;
     } else if (rtb_Add_pu > 0.0) {
@@ -1082,7 +1024,7 @@ void gru_quadcl_step(void)
       rtb_Sum9 = rtb_Add_pu;
     }
 
-    /* Signum: '<S47>/Sign1' */
+    /* Signum: '<S46>/Sign1' */
     if (rtb_Add1_k < 0.0) {
       rtb_Add1_k = -1.0;
     } else if (rtb_Add1_k > 0.0) {
@@ -1093,18 +1035,18 @@ void gru_quadcl_step(void)
       }
     }
 
-    /* Switch: '<S48>/Switch' incorporates:
-     *  Constant: '<S48>/Constant'
-     *  Logic: '<S47>/Logical Operator'
-     *  RelationalOperator: '<S47>/Relational Operator'
-     *  Signum: '<S47>/Sign'
-     *  Signum: '<S47>/Sign1'
+    /* Switch: '<S47>/Switch' incorporates:
+     *  Constant: '<S47>/Constant'
+     *  Logic: '<S46>/Logical Operator'
+     *  RelationalOperator: '<S46>/Relational Operator'
+     *  Signum: '<S46>/Sign'
+     *  Signum: '<S46>/Sign1'
      */
     if (rtb_RelationalOperator && (rtb_Sum9 == rtb_Add1_k)) {
       rtb_Add_pu = 0.0;
     }
 
-    /* End of Switch: '<S48>/Switch' */
+    /* End of Switch: '<S47>/Switch' */
     gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_n += 0.01 * rtb_Add_pu;
   }
 
@@ -1118,12 +1060,12 @@ void gru_quadcl_step(void)
     gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_d = 2;
   }
 
-  /* End of Update for DiscreteIntegrator: '<S48>/Discrete-Time Integrator' */
+  /* End of Update for DiscreteIntegrator: '<S47>/Discrete-Time Integrator' */
 
-  /* Update for UnitDelay: '<S46>/UD' */
+  /* Update for UnitDelay: '<S45>/UD' */
   gru_quadcl_DW.UD_DSTATE_h = rtb_TSamp_j;
 
-  /* Weighted Moving Average Block: '<S43>/Weighted Moving Average'
+  /* Weighted Moving Average Block: '<S42>/Weighted Moving Average'
    */
   {
     /*
@@ -1163,13 +1105,10 @@ void gru_quadcl_initialize(void)
     }
   }
 
-  gru_quadcl_DW.DiscreteTransferFcn_states[0] = 0.0;
-  gru_quadcl_DW.DiscreteTransferFcn_states[1] = 0.0;
   gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_i = 0.0;
   gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_l = 0.0;
   gru_quadcl_DW.UD_DSTATE_n = 0.0;
   gru_quadcl_DW.WeightedMovingAverage_TapDela_f = 0.0;
-  gru_quadcl_DW.DiscreteTransferFcn1_states = 0.0;
   gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_k = 0.0;
   gru_quadcl_DW.DiscreteTimeIntegrator_DSTATE_n = 0.0;
   gru_quadcl_DW.UD_DSTATE_h = 0.0;
@@ -1225,13 +1164,6 @@ void gru_quadcl_initialize(void)
     }
   }
 
-  {
-    int_T i;
-    for (i = 0; i < 32; i++) {
-      gru_quadcl_U.crackle_cmds[i] = 0.0;
-    }
-  }
-
   /* external outputs */
   {
     int_T i;
@@ -1252,19 +1184,19 @@ void gru_quadcl_initialize(void)
   gru_quadcl_PrevZCX.grabalt_Trig_ZCE = UNINITIALIZED_ZCSIG;
   gru_quadcl_PrevZCX.grablatlongscaling_Trig_ZCE = UNINITIALIZED_ZCSIG;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S27>/Discrete-Time Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S26>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_PrevRese = 2;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S36>/Discrete-Time Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S35>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_i = 0;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S52>/Discrete-Time Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S51>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_p = 0;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S33>/Discrete-Time Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S32>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_c = 0;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S48>/Discrete-Time Integrator' */
+  /* InitializeConditions for DiscreteIntegrator: '<S47>/Discrete-Time Integrator' */
   gru_quadcl_DW.DiscreteTimeIntegrator_PrevRe_d = 0;
 }
 

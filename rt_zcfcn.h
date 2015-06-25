@@ -3,14 +3,12 @@
  *
  * Code generated for Simulink model 'gru_quadcl'.
  *
- * Model version                  : 1.1178
+ * Model version                  : 1.1180
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Wed Jun 24 20:50:10 2015
+ * C/C++ source code generated on : Thu Jun 25 17:50:52 2015
  *
  * Target selection: ert_shrlib.tlc
- * Embedded hardware selection: 32-bit Generic
- * Emulation hardware selection:
- *    Differs from embedded hardware (MATLAB Host)
+ * Embedded hardware selection: Atmel->AVR
  * Code generation objectives: Unspecified
  * Validation result: Not run
  */
