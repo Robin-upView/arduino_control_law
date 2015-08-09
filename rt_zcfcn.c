@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'gru_quadcl'.
  *
- * Model version                  : 1.1180
+ * Model version                  : 1.1181
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Thu Jun 25 17:50:52 2015
+ * C/C++ source code generated on : Sun Jul 19 11:46:40 2015
  *
  * Target selection: ert_shrlib.tlc
  * Embedded hardware selection: Atmel->AVR

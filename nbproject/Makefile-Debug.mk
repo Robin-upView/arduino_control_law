@@ -37,9 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/ert_main.o \
-	${OBJECTDIR}/gru_quadcl.o \
-	${OBJECTDIR}/gru_quadcl_data.o \
-	${OBJECTDIR}/rt_zcfcn.o
+	${OBJECTDIR}/gru_quadcl.o
 
 
 # C Compiler Flags
@@ -77,16 +75,6 @@ ${OBJECTDIR}/gru_quadcl.o: nbproject/Makefile-${CND_CONF}.mk gru_quadcl.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gru_quadcl.o gru_quadcl.c
-
-${OBJECTDIR}/gru_quadcl_data.o: nbproject/Makefile-${CND_CONF}.mk gru_quadcl_data.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gru_quadcl_data.o gru_quadcl_data.c
-
-${OBJECTDIR}/rt_zcfcn.o: nbproject/Makefile-${CND_CONF}.mk rt_zcfcn.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rt_zcfcn.o rt_zcfcn.c
 
 # Subprojects
 .build-subprojects:

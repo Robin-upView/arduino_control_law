@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'gru_quadcl'.
  *
- * Model version                  : 1.1180
+ * Model version                  : 1.1197
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Thu Jun 25 17:50:52 2015
+ * C/C++ source code generated on : Tue Aug 04 12:31:13 2015
  *
  * Target selection: ert_shrlib.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -18,10 +18,12 @@
 
 /* Constant parameters (auto storage) */
 const ConstP_gru_quadcl_T gru_quadcl_ConstP = {
-  /* Expression: mgainval
-   * Referenced by: '<S3>/Weighted Moving Average'
+  /* Pooled Parameter (Expression: mgainval)
+   * Referenced by:
+   *   '<S23>/Weighted Moving Average'
+   *   '<S24>/Weighted Moving Average'
    */
-  { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }
+  { 0.2, 0.2, 0.2, 0.2, 0.2 }
 };
 
 /*

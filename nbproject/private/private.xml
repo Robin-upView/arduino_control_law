@@ -7,9 +7,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Robin/NetBeansProjects/control_law/gru_quadcl_types.h</file>
+            <file>file:/Users/Robin/NetBeansProjects/control_law/gru_quadcl_data.c</file>
             <file>file:/Users/Robin/NetBeansProjects/control_law/gru_quadcl.c</file>
+            <file>file:/Users/Robin/NetBeansProjects/control_law/gru_quadcl_private.h</file>
             <file>file:/Users/Robin/NetBeansProjects/control_law/ert_main.c</file>
             <file>file:/Users/Robin/NetBeansProjects/control_law/gru_quadcl.h</file>
+            <file>file:/Users/Robin/NetBeansProjects/control_law/rtwtypes.h</file>
         </group>
     </open-files>
 </project-private>

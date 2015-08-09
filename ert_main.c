@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'gru_quadcl'.
  *
- * Model version                  : 1.1180
+ * Model version                  : 1.1213
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Thu Jun 25 17:50:52 2015
+ * C/C++ source code generated on : Sun Aug 09 13:31:23 2015
  *
  * Target selection: ert_shrlib.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -76,7 +76,7 @@ int_T main(int_T argc, const char *argv[])
   gru_quadcl_initialize();
 
   /* Attach rt_OneStep to a timer or interrupt service routine with
-   * period 0.01 seconds (the model's base sample time) here.  The
+   * period 0.005 seconds (the model's base sample time) here.  The
    * call syntax for rt_OneStep is
    *
    *  rt_OneStep();
