@@ -4,9 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>gru_quadcl.h</itemPath>
-      <itemPath>gru_quadcl_private.h</itemPath>
-      <itemPath>gru_quadcl_types.h</itemPath>
+      <itemPath>Arduino_250.h</itemPath>
+      <itemPath>Arduino_250_private.h</itemPath>
+      <itemPath>Arduino_250_types.h</itemPath>
       <itemPath>rtwtypes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -16,8 +16,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Arduino_250.c</itemPath>
       <itemPath>ert_main.c</itemPath>
-      <itemPath>gru_quadcl.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -51,15 +51,15 @@
           <ranlibTool>avr-ranlib</ranlibTool>
         </archiverTool>
       </compileType>
+      <item path="Arduino_250.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Arduino_250.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Arduino_250_private.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Arduino_250_types.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ert_main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="gru_quadcl.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="gru_quadcl.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gru_quadcl_private.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gru_quadcl_types.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -86,15 +86,15 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="Arduino_250.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Arduino_250.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Arduino_250_private.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Arduino_250_types.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ert_main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="gru_quadcl.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="gru_quadcl.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gru_quadcl_private.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gru_quadcl_types.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
       </item>

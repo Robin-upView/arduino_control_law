@@ -36,8 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/ert_main.o \
-	${OBJECTDIR}/gru_quadcl.o
+	${OBJECTDIR}/Arduino_250.o \
+	${OBJECTDIR}/ert_main.o
 
 
 # C Compiler Flags
@@ -58,23 +58,23 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a ${OBJECTFILES} 
+	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a
+
+${OBJECTDIR}/Arduino_250.o: nbproject/Makefile-${CND_CONF}.mk Arduino_250.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Arduino_250.o Arduino_250.c
 
 ${OBJECTDIR}/ert_main.o: nbproject/Makefile-${CND_CONF}.mk ert_main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ert_main.o ert_main.c
-
-${OBJECTDIR}/gru_quadcl.o: nbproject/Makefile-${CND_CONF}.mk gru_quadcl.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gru_quadcl.o gru_quadcl.c
 
 # Subprojects
 .build-subprojects:
@@ -82,7 +82,7 @@ ${OBJECTDIR}/gru_quadcl.o: nbproject/Makefile-${CND_CONF}.mk gru_quadcl.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcontrol_law.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libarduino_control_law.a
 
 # Subprojects
 .clean-subprojects:

@@ -1,8 +1,8 @@
-build/Debug/Arduino-MacOSX/ert_main.o: ert_main.c gru_quadcl.h rtwtypes.h \
- gru_quadcl_types.h
+build/Debug/Arduino-MacOSX/ert_main.o: ert_main.c Arduino_250.h \
+ rtwtypes.h Arduino_250_types.h
 
-gru_quadcl.h:
+Arduino_250.h:
 
 rtwtypes.h:
 
-gru_quadcl_types.h:
+Arduino_250_types.h:

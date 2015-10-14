@@ -1,11 +1,11 @@
 /*
  * File: ert_main.c
  *
- * Code generated for Simulink model 'gru_quadcl'.
+ * Code generated for Simulink model 'Arduino_250'.
  *
- * Model version                  : 1.1213
+ * Model version                  : 1.1223
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Sun Aug 09 13:31:23 2015
+ * C/C++ source code generated on : Wed Oct 14 18:15:28 2015
  *
  * Target selection: ert_shrlib.tlc
  * Embedded hardware selection: Atmel->AVR
@@ -15,7 +15,7 @@
 
 #include <stddef.h>
 #include <stdio.h>                     /* This ert_main.c example uses printf/fflush */
-#include "gru_quadcl.h"                /* Model's header file */
+#include "Arduino_250.h"               /* Model's header file */
 #include "rtwtypes.h"
 
 /*
@@ -37,7 +37,7 @@ void rt_OneStep(void)
 
   /* Check for overrun */
   if (OverrunFlag) {
-    rtmSetErrorStatus(gru_quadcl_M, "Overrun");
+    rtmSetErrorStatus(Arduino_250_M, "Overrun");
     return;
   }
 
@@ -48,7 +48,7 @@ void rt_OneStep(void)
   /* Set model inputs here */
 
   /* Step the model */
-  gru_quadcl_step();
+  Arduino_250_step();
 
   /* Get model outputs here */
 
@@ -73,7 +73,7 @@ int_T main(int_T argc, const char *argv[])
   (void)(argv);
 
   /* Initialize model */
-  gru_quadcl_initialize();
+  Arduino_250_initialize();
 
   /* Attach rt_OneStep to a timer or interrupt service routine with
    * period 0.005 seconds (the model's base sample time) here.  The
@@ -85,14 +85,14 @@ int_T main(int_T argc, const char *argv[])
          "Generated ERT main won't simulate model step behavior. "
          "To change this behavior select the 'MAT-file logging' option.\n");
   fflush((NULL));
-  while (rtmGetErrorStatus(gru_quadcl_M) == (NULL)) {
+  while (rtmGetErrorStatus(Arduino_250_M) == (NULL)) {
     /*  Perform other application tasks here */
   }
 
   /* Disable rt_OneStep() here */
 
   /* Terminate model */
-  gru_quadcl_terminate();
+  Arduino_250_terminate();
   return 0;
 }
 

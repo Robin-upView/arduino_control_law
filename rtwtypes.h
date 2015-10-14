@@ -1,11 +1,11 @@
 /*
  * File: rtwtypes.h
  *
- * Code generated for Simulink model 'gru_quadcl'.
+ * Code generated for Simulink model 'Arduino_250'.
  *
- * Model version                  : 1.1213
+ * Model version                  : 1.1223
  * Simulink Coder version         : 8.6 (R2014a) 27-Dec-2013
- * C/C++ source code generated on : Sun Aug 09 13:31:23 2015
+ * C/C++ source code generated on : Wed Oct 14 18:15:28 2015
  *
  * Target selection: ert_shrlib.tlc
  * Embedded hardware selection: Atmel->AVR

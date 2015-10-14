@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Arduino-MacOSX
 CND_ARTIFACT_DIR_Debug=dist/Debug/Arduino-MacOSX
-CND_ARTIFACT_NAME_Debug=libcontrol_law.a
-CND_ARTIFACT_PATH_Debug=dist/Debug/Arduino-MacOSX/libcontrol_law.a
+CND_ARTIFACT_NAME_Debug=libarduino_control_law.a
+CND_ARTIFACT_PATH_Debug=dist/Debug/Arduino-MacOSX/libarduino_control_law.a
 CND_PACKAGE_DIR_Debug=dist/Debug/Arduino-MacOSX/package
-CND_PACKAGE_NAME_Debug=controllaw.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Arduino-MacOSX/package/controllaw.tar
+CND_PACKAGE_NAME_Debug=arduinocontrollaw.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Arduino-MacOSX/package/arduinocontrollaw.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-MacOSX
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
-CND_ARTIFACT_NAME_Release=libcontrol_law.a
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/libcontrol_law.a
+CND_ARTIFACT_NAME_Release=libarduino_control_law.a
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/libarduino_control_law.a
 CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
-CND_PACKAGE_NAME_Release=controllaw.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/controllaw.tar
+CND_PACKAGE_NAME_Release=arduinocontrollaw.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/arduinocontrollaw.tar
 #
 # include compiler specific variables
 #

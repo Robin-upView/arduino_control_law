@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=control_law
+PROJECTNAME=arduino_control_law
 
 # Active Configuration
 DEFAULTCONF=Debug
